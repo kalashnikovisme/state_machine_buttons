@@ -27,7 +27,7 @@ module StateMachineButtons
           class: "btn btn-sm btn-xs btn-#{object.send("#{state_method}_button_color", event.event)}",
           method: :patch
         ) do
-          t("state_machines.#{model_name}.#{state_method}.events.#{event.event}")
+          object.class.send "human_#{state_method}_event_name", event.event
         end
       )
     end

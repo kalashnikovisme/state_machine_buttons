@@ -30,7 +30,7 @@ module StateMachineButtons
     private
 
     def button(event:, model_name:, object:, state_method:, controller:, action:, namespace:, parameters:, model_param_name:, form_options:)
-      attributes = { "#{state_method}_event" => event }
+      attributes = { aasm_event: event }
       concat(
         patch_button(
           record: object.model,
@@ -42,8 +42,7 @@ module StateMachineButtons
           button_options: { class: "btn btn-sm btn-xs btn-#{object.send("#{state_method}_button_color", event)}" },
           form_options: form_options
         ) do
-          binding.pry if state_method == :participation_state
-          I18n.t("state_machines.#{object.model.class.name.underscore}.#{state_method}.events.#{object.model.aasm(state_method).events.select { |ev| ev.name == event }.first}")
+          I18n.t("state_machines.#{object.model.class.name.underscore}.#{state_method}.events.#{object.model.aasm(state_method).events.select { |ev| ev.name == event }.first.name}")
         end
       )
     end
